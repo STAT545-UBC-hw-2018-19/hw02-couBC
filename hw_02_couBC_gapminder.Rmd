@@ -1,0 +1,142 @@
+---
+title: "hw02_couBC_gapminder"
+author: "CouBC"
+date: '2018-09-24'
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+First - load gapminder dataset and load dplyr and tidyverse in order to start data exploration
+```{r}
+library(gapminder)
+library(tidyverse)
+library(dplyr)
+
+```
+
+Smell-testing the data by:
+```{r}
+is.atomic(gapminder)
+is.vector(gapminder)
+is.matrix(gapminder)
+is.list(gapminder)
+is.data.frame(gapminder)
+```
+Gapminder is a list and data frame.
+
+
+Find out what class gapminder is:
+
+```{r}
+class(gapminder)
+```
+
+Identify how many variables and columns there are in gapminder
+
+```{r}
+glimpse(gapminder)
+
+```
+
+There are 6 variables/columns in gapminder dataframe and 1704 rows/observations/cases. I used the functions glimpse(gapminder), & View(gapminder). Both allow me to see number of columns and rows.
+
+
+To identify what data type each variable is, I will use the typeof() function:
+```{r}
+typeof(gapminder$country)
+typeof(gapminder$continent)
+typeof(gapminder$year)
+typeof(gapminder$lifeExp)
+typeof(gapminder$pop)
+typeof(gapminder$gdpPercap)
+
+ncol(gapminder)
+nrow(gapminder)
+length(gapminder)
+
+
+```
+
+I will choose the gapminder continent variable as the *categorical variable* and *lifeExp* as the continuous variable I will explore in more depth.
+
+First continent (categorical variable)
+
+```{r}
+class(gapminder)
+levels(gapminder$continent)
+
+```
+
+
+This tells me the number of observations from each continent:
+
+```{r}
+summary(gapminder$continent)
+```
+
+Bar chart of continents
+
+```{r}
+ggplot(data = gapminder) + 
+  geom_bar(mapping = aes(x = continent))
+```
+
+
+Exploring lifeExp, a continuous variable. Range of lifeExp varies from 23.6 to 82.6 years of age. Mean = 59.47 (sd = 12.9) while Median is 60.71
+
+```{r}
+summary(gapminder$lifeExp)
+
+sd(gapminder$lifeExp)
+```
+
+
+
+Histogram of lifeExp
+
+```{r}
+ggplot(gapminder, aes(lifeExp)) +
+  geom_histogram(bins = 15, color = "orange", fill = "orange")
+```
+
+
+Histogram with line 
+
+```{r}
+ggplot(gapminder, aes(lifeExp)) +
+  geom_histogram(aes(y=..density..), fill = 'orange', binwidth = 5) +
+  geom_density()
+```
+
+Creating a boxplot of lifeExp by continent
+
+```{r}
+a <- ggplot(gapminder, aes(continent, pop))
+
+```
+
+```{r}
+a + geom_boxplot() +
+  scale_y_log10()
+```
+
+Creating a scatterplot of 2 quantitative variables - year and population
+
+```{r}
+gapminder %>% 
+  ggplot(aes(year, pop)) +
+  geom_point(color ="green") +
+  geom_line(color="green") 
+  
+```
+
+Exploring population by country
+
+
+
+
+Filtering year and population by country: Taiwan
+
+
+
