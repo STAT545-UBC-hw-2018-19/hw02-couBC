@@ -289,19 +289,35 @@ a + geom_boxplot() +
 
 ![](hw_02_couBC_gapminder_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
-Creating a scatterplot of 2 quantitative variables - year and population
+Creating a scatterplot - gdpPercap (continuous) and LifeExp (continuous) in Asia
 
 
 ```r
-gapminder %>% 
-  ggplot(aes(year, pop)) +
-  geom_point(color ="green") +
-  geom_line(color="green") 
+gapminder %>%
+  filter(continent == "Asia") %>% 
+  ggplot(aes(lifeExp, gdpPercap)) +
+  geom_point()
 ```
 
 ![](hw_02_couBC_gapminder_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
-Exploring gdpPercap and LifeExp by continent
+
+
+
+Creating a line plot of 2 quantitative variables - year and population
+
+
+```r
+gapminder %>% 
+  filter(country == "Taiwan") %>% 
+  ggplot(aes(year, lifeExp)) +
+  geom_point(color ="green") +
+  geom_line(color="green") 
+```
+
+![](hw_02_couBC_gapminder_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+
+Exploring gdpPercap (continuous) and LifeExp (continuous) by continent using facet_wrap
 
 
 ```r
@@ -310,11 +326,9 @@ geom_point() +
 facet_wrap(~continent)
 ```
 
-![](hw_02_couBC_gapminder_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+![](hw_02_couBC_gapminder_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
 
-
-Filtering year and population by country: Taiwan
 
 
 An example of using select, filter, and piping
@@ -343,6 +357,40 @@ gapminder %>%
 ## # ... with 14 more rows
 ```
 
+I was trying to get some boxplots on top of jitter plots by continent. This is a categorical variable (continent) plotted with a continuous variable (lifeExp) I got the code for this one from: https://cran.r-project.org/web/packages/gapminder/README.html
 
 
+
+```r
+ggplot(gapminder, aes(x = continent, y = lifeExp)) +
+  geom_boxplot(outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+```
+
+![](hw_02_couBC_gapminder_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+
+There is something wrong with this code; it appears to get Afghanistan and Rwanda data, but I think there should be 12 rows of each based on the data exploration above? Can you tell me how to fix it?
+
+
+```r
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
+```
+
+```
+## # A tibble: 12 x 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    <fct>       <fct>     <int>   <dbl>    <int>     <dbl>
+##  1 Afghanistan Asia       1957    30.3  9240934      821.
+##  2 Afghanistan Asia       1967    34.0 11537966      836.
+##  3 Afghanistan Asia       1977    38.4 14880372      786.
+##  4 Afghanistan Asia       1987    40.8 13867957      852.
+##  5 Afghanistan Asia       1997    41.8 22227415      635.
+##  6 Afghanistan Asia       2007    43.8 31889923      975.
+##  7 Rwanda      Africa     1952    40    2534927      493.
+##  8 Rwanda      Africa     1962    43    3051242      597.
+##  9 Rwanda      Africa     1972    44.6  3992121      591.
+## 10 Rwanda      Africa     1982    46.2  5507565      882.
+## 11 Rwanda      Africa     1992    23.6  7290203      737.
+## 12 Rwanda      Africa     2002    43.4  7852401      786.
+```
 

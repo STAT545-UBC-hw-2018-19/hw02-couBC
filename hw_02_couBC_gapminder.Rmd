@@ -121,22 +121,60 @@ a + geom_boxplot() +
   scale_y_log10()
 ```
 
-Creating a scatterplot of 2 quantitative variables - year and population
+Creating a scatterplot - gdpPercap (continuous) and LifeExp (continuous) in Asia
+
+```{r}
+gapminder %>%
+  filter(continent == "Asia") %>% 
+  ggplot(aes(lifeExp, gdpPercap)) +
+  geom_point()
+```
+
+
+
+
+Creating a line plot of 2 quantitative variables - year and population
 
 ```{r}
 gapminder %>% 
-  ggplot(aes(year, pop)) +
+  filter(country == "Taiwan") %>% 
+  ggplot(aes(year, lifeExp)) +
   geom_point(color ="green") +
   geom_line(color="green") 
   
 ```
 
-Exploring population by country
+Exploring gdpPercap (continuous) and LifeExp (continuous) by continent using facet_wrap
 
-Hello
+```{r}
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+geom_point() +
+facet_wrap(~continent)
+```
 
 
-Filtering year and population by country: Taiwan
 
 
+An example of using select, filter, and piping
+
+```{r}
+gapminder %>% 
+  filter(continent == "Oceania") %>% 
+  select(year, country, gdpPercap)
+```
+
+I was trying to get some boxplots on top of jitter plots by continent. This is a categorical variable (continent) plotted with a continuous variable (lifeExp) I got the code for this one from: https://cran.r-project.org/web/packages/gapminder/README.html
+
+
+```{r}
+ggplot(gapminder, aes(x = continent, y = lifeExp)) +
+  geom_boxplot(outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+```
+
+There is something wrong with this code; it appears to get Afghanistan and Rwanda data, but I think there should be 12 rows of each based on the data exploration above? Can you tell me how to fix it?
+
+```{r}
+filter(gapminder, country == c("Rwanda", "Afghanistan"))
+```
 
