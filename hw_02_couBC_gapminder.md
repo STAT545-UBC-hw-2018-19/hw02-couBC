@@ -369,11 +369,11 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
 
 ![](hw_02_couBC_gapminder_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
-There is something wrong with this code; it appears to get Afghanistan and Rwanda data, but I think there should be 12 rows of each based on the data exploration above? Can you tell me how to fix it?
+There is something wrong with this code; it appears to get Afghanistan and Rwanda data, but I think there should be 12 rows for each country based on the data exploration above - it is missing the one that is 5 years apart (e.g., 1962, 1972 etc.,). Can you tell me how to fix it?
 
 
 ```r
-filter(gapminder, country == c("Rwanda", "Afghanistan"))
+filter(gapminder, country == c("Rwanda", "Afghanistan")) 
 ```
 
 ```
