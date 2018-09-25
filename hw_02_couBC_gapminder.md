@@ -301,12 +301,48 @@ gapminder %>%
 
 ![](hw_02_couBC_gapminder_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
-Exploring population by country
+Exploring gdpPercap and LifeExp by continent
 
+
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+geom_point() +
+facet_wrap(~continent)
+```
+
+![](hw_02_couBC_gapminder_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
 
 
 
 Filtering year and population by country: Taiwan
+
+
+An example of using select, filter, and piping
+
+
+```r
+gapminder %>% 
+  filter(continent == "Oceania") %>% 
+  select(year, country, gdpPercap)
+```
+
+```
+## # A tibble: 24 x 3
+##     year country   gdpPercap
+##    <int> <fct>         <dbl>
+##  1  1952 Australia    10040.
+##  2  1957 Australia    10950.
+##  3  1962 Australia    12217.
+##  4  1967 Australia    14526.
+##  5  1972 Australia    16789.
+##  6  1977 Australia    18334.
+##  7  1982 Australia    19477.
+##  8  1987 Australia    21889.
+##  9  1992 Australia    23425.
+## 10  1997 Australia    26998.
+## # ... with 14 more rows
+```
+
 
 
 
